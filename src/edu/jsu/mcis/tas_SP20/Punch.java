@@ -21,7 +21,7 @@ public class Punch {
    
    public Punch(Badge badge, int terminalid, int punchtypeid){
        
-       this.badge = badge.getID();
+       this.badge = badge.getId();
        this.punchtypeid = punchtypeid;
        this.id = id;
        this.terminalid = terminalid;
@@ -36,7 +36,6 @@ public class Punch {
         this.id = id;
     }
     //timestamps - long, times - LocalTime
-    public void set
     
    public String printOriginalTimestamp(){
        
@@ -53,6 +52,7 @@ public class Punch {
        if (punchtypeid == 2){
            
        }
+       return "";
         
     }
        public String printAdjustedTimestamp(){
@@ -67,6 +67,8 @@ public class Punch {
            if(punchtypeid ==2){
                
            }
+           
+           return "";
        }
     /* punch outputs: 
     CLOCKED IN

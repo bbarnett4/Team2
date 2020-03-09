@@ -154,12 +154,22 @@ public class Shift {
         
     @Override
     public String toString() {
+        
+        StringBuilder s = new StringBuilder();
+        
         int lunchDuration = this.getLunchDuration();
         int shiftDuration = this.getShiftDuration();
         
-                            //"Shift 1: 07:00 - 15:30 (510 minutes); Lunch: 12:00 - 12:30 (30 minutes"
-
-        return String.format("Shift 1: 07:00 - 15:30 (510 minutes); Lunch: 12:00 - 12:30 (30 minutes",
+        s.append(description).append(": ");
+        s.append(start).append(" - ");
+        s.append(stop).append(" (").append(shiftDuration).append(" minutes); ");
+        s.append("Lunch: ").append(lunchstart).append(" - ").append(lunchstop);
+        s.append(" (").append(lunchduration).append(" minutes)");
+                
+        
+        // "Shift 1: 07:00 - 15:30 (510 minutes); Lunch: 12:00 - 12:30 (30 minutes)"
+        
+        return (s.toString());
               
         
     }
