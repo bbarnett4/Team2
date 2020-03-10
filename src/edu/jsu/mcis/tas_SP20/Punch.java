@@ -14,6 +14,7 @@ public class Punch {
     private int id;
     private long timestamp;
     private long adjtimestamp;
+    private String eventdata;
     
     //needs string instance field called "adjustmenttype"
     
@@ -44,36 +45,60 @@ public class Punch {
        gcal.setTimeInMillis(timestamp);
        
        if(punchtypeid == 0){
-           
+           punch = "#" + badge + " CLOCKED OUT: " + gcal.toZonedDateTime().format(DateTimeFormatter.ofPattern( "E MM/DD/YYYY HH:MM:SS" + " ("+eventdata+")"));
        }
        if(punchtypeid == 1){
-           
+           punch = "#" + badge + " CLOCKED IN: " + gcal.toZonedDateTime().format(DateTimeFormatter.ofPattern( "E MM/DD/YYYY HH:MM:SS" + " ("+eventdata+")"));
        }
        if (punchtypeid == 2){
-           
+           punch = "#" + badge + " TIMED OUT; " + gcal.toZonedDateTime().format(DateTimeFormatter.ofPattern( "E MM/DD/YYYY HH:MM:SS" + " ("+eventdata+")"));
        }
-       return "";
+       return punch.toUpperCase();
         
     }
+   
+   public void adjust(Shift s){ 
+       GregorianCalendar shiftStart = new GregorianCalendar();
+       GregorianCalendar shiftStop = new GregorianCalendar();
+       GregorianCalendar startInterval = new GregorianCalendar();
+       GregorianCalendar stopInterval = new GregorianCalendar();
+       GregorianCalendar startGrace = new GregorianCalendar();
+       GregorianCalendar stopGrace = new GregorianCalendar();
+       GregorianCalendar startDock = new GregorianCalendar();
+       GregorianCalendar stopDock = new GregorianCalendar();
+       GregorianCalendar lunchStart = new GregorianCalendar();
+       GregorianCalendar lunchStop = new GregorianCalendar();
+       
+   }
        public String printAdjustedTimestamp(){
            String punch = null;
            
            if(punchtypeid == 0){
-               
+               punch = "#" + badge + " CLOCKED OUT: " + gcal.toZonedDateTime().format(DateTimeFormatter.ofPattern( "E MM/DD/YYYY HH:MM:SS" + " ("+eventdata+")"));
            }
            if(punchtypeid ==1){
-               
+               punch = "#" + badge + " CLOCKED IN: " + gcal.toZonedDateTime().format(DateTimeFormatter.ofPattern( "E MM/DD/YYYY HH:MM:SS" + " ("+eventdata+")"));
            }
            if(punchtypeid ==2){
-               
+               punch = "#" + badge + " TIMED OUT: " + gcal.toZonedDateTime().format(DateTimeFormatter.ofPattern( "E MM/DD/YYYY HH:MM:SS" + " ("+eventdata+")"));
            }
            
-           return "";
+           return punch.toUpperCase();
        }
-    /* punch outputs: 
-    CLOCKED IN
-    CLOCKED OUT
-    TIME OUT
-    */       
-    
+           
+    public int getTerminalid(){
+        return this.terminalid;
+    }
+    public int getPunchtypeid(){
+        return this.punchtypeid;
+    }
+    public int Id(){
+        return this.id;
+    }
+    public long getOriginaltimestamp(){
+        return this.timestamp;
+    }
+    public long getAdjtimestamp(){
+        return this.adjtimestamp;
+    }
 }
