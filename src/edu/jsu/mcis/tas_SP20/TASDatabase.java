@@ -1,9 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package edu.jsu.mcis.tas_SP20;
+
+import java.sql.*;
+import java.util.*;
 
 /**
  *
@@ -11,4 +10,21 @@ package edu.jsu.mcis.tas_SP20;
  */
 public class TASDatabase {
     
+    public Badge getBadge(){
+        
+}
+    /*accept shift ID as parameter */
+    
+    public Shift getShift(String id){
+        
+    }
+    
+    /*accept badge object as parameter*/
+    public Shift getShift(Badge Badge){
+        
+    }
+    
+    public Punch getPunch(){
+        
+    }
 }
