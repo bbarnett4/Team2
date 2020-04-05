@@ -2,6 +2,7 @@
 package edu.jsu.mcis.tas_SP20;
 
 import java.sql.*;
+import java.time.LocalTime;
 import java.util.*;
 
 /**
@@ -44,8 +45,43 @@ public class TASDatabase {
     /*accept badge object as parameter*/
     public Shift getShift(Badge badge) {
         
-        return null; // remove this later!
+        Shift shift = null;
         
+        try {
+            String query = String.format("select * from shift where id = (select shiftid from employee where badgeid = '%s')", badge.getId());
+            System.out.println(query);
+            
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            boolean hasResults = pstmt.execute();
+            
+            if (hasResults) {
+                ResultSet resultset = pstmt.getResultSet();
+                
+                if (resultset.next()) {
+                    int id = resultset.getInt("id");
+                    String description = resultset.getString("description");
+                    LocalTime start = resultset.getTime("start").toLocalTime();
+                    LocalTime stop = resultset.getTime("stop").toLocalTime();
+                    int interval = resultset.getInt("interval");
+                    int graceperiod = resultset.getInt("graceperiod");
+                    int dock = resultset.getInt("dock");
+                    LocalTime lunchstart = resultset.getTime("lunchstart").toLocalTime();
+                    LocalTime lunchstop = resultset.getTime("lunchstop").toLocalTime();
+                    int lunchdeduct = resultset.getInt("lunchdeduct");
+                    System.out.println(id);
+                    
+                    shift = new Shift(id, description, start, stop, interval,
+                            graceperiod, dock, lunchstart, lunchstop, lunchdeduct);
+
+                }
+
+
+            }
+            
+            boolean hasresults = pstmt.execute();
+        } catch (Exception e) { e.printStackTrace(); }
+        
+        return shift;
     }
     
     public Punch getPunch(int id){
