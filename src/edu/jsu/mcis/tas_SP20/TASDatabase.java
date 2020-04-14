@@ -37,10 +37,39 @@ public class TASDatabase {
     /*accept shift ID as parameter */
     
     public Shift getShift(int id) {
+        Shift shift = null;
         
-        return null; // remove this later!
+        try {
+            String query = String.format("select * from shift where id = '%s'", id);
+            
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            boolean hasResults = pstmt.execute();
+                        
+            if (hasResults) {
+                ResultSet resultset = pstmt.getResultSet();
+                
+                if (resultset.next()) {
+                    String description = resultset.getString("description");
+                    LocalTime start = resultset.getTime("start").toLocalTime();
+                    LocalTime stop = resultset.getTime("stop").toLocalTime();
+                    int interval = resultset.getInt("interval");
+                    int graceperiod = resultset.getInt("graceperiod");
+                    int dock = resultset.getInt("dock");
+                    LocalTime lunchstart = resultset.getTime("lunchstart").toLocalTime();
+                    LocalTime lunchstop = resultset.getTime("lunchstop").toLocalTime();
+                    int lunchdeduct = resultset.getInt("lunchdeduct");
+                    System.out.println(description);
+                    
+                    shift = new Shift(id, description, start, stop, interval,
+                            graceperiod, dock, lunchstart, lunchstop, lunchdeduct);
+                }
+            }
+        } catch (Exception e) { e.printStackTrace();}
+        
+        return shift;
         
     }
+        
     
     /*accept badge object as parameter*/
     public Shift getShift(Badge badge) {
@@ -49,7 +78,6 @@ public class TASDatabase {
         
         try {
             String query = String.format("select * from shift where id = (select shiftid from employee where badgeid = '%s')", badge.getId());
-            System.out.println(query);
             
             PreparedStatement pstmt = conn.prepareStatement(query);
             boolean hasResults = pstmt.execute();
@@ -68,7 +96,6 @@ public class TASDatabase {
                     LocalTime lunchstart = resultset.getTime("lunchstart").toLocalTime();
                     LocalTime lunchstop = resultset.getTime("lunchstop").toLocalTime();
                     int lunchdeduct = resultset.getInt("lunchdeduct");
-                    System.out.println(id);
                     
                     shift = new Shift(id, description, start, stop, interval,
                             graceperiod, dock, lunchstart, lunchstop, lunchdeduct);
@@ -77,7 +104,7 @@ public class TASDatabase {
 
 
             }
-            
+                        
             boolean hasresults = pstmt.execute();
         } catch (Exception e) { e.printStackTrace(); }
         
@@ -125,7 +152,7 @@ public class TASDatabase {
         catch (Exception e) { e.printStackTrace(); }
         
         return punch;
-        
+              
     }
     
     
