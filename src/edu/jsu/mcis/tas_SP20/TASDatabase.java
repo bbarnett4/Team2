@@ -30,9 +30,31 @@ public class TASDatabase {
     }
     
     public Badge getBadge(String id){
+        Badge badge = null;
         
-        return null; // remove this later!
+        try { 
+            String query = String.format("SELECT * FROM badge WHERE id= '"+id+"'");
+            
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            boolean hasResults = pstmt.execute();
         
+        if ( hasResults){
+            ResultSet resultset = pstmt.getResultSet();
+            
+            if (resultset.next()){ 
+                String badgeid = resultset.getString("badgeid");
+                String desc = resultset.getString("description");
+                
+                badge = new Badge(id, desc);
+            }
+        } 
+        }
+        catch (Exception e) { e.printStackTrace(); }
+        
+        
+        return badge; // remove this later!
+        
+   
     }
     /*accept shift ID as parameter */
     
